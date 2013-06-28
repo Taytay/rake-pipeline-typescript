@@ -1,58 +1,21 @@
-# Rake::Pipeline::Web::Filters [![Build Status](https://secure.travis-ci.org/wycats/rake-pipeline-web-filters.png?branch=master)](http://travis-ci.org/wycats/rake-pipeline-web-filters)
+# Rake::Pipeline::Typescript
 
-This project contains a set of rake-pipeline filters for building web
-apps. 
+This is a typescript filter to compile Tyescript files in the Rake Pipeline.
 
-It includes these filters:
+(I shamelessly forked [rake-pipeline-web-filters](https://github.com/wycats/rake-pipeline-web-filters) since this is my first Gem)
 
-* Cache Buster - Write a fingerprint into each file name
-* Coffescript - Convert Coffeescript to Javascript
-* GZip - Create gzip'd version of your files
-* Handlebars - Process handlebars templates
-* IIFE - Wrap source files in Immediately Invoked Function Expressions
-* Jade - Process Jade templates
-* LESS - Convert LESS to CSS
-* Markdown - Convert Markdown to HTML
-* Minispade - Wrap JS files in Minispade modules
-* Neuter - Require files in a file and generate one single combined file
-* SASS - Convert SASS to CSS
-* Stylus - Convert Stylus to CSS
-* Tilt - Use Tilt to process 
-* Uglify - Minify JS
-* YUI CSS - Minify CSS
-* YUI Javascript - Minify JS
-
-Here's a quick example of a realistic project's Assetfile:
+Here's how you'd use it in your Assetfile:
 
 ```ruby
 # Assetfile
-require 'rake-pipeline-web-filters'
+require 'rake-pipeline-typescript'
 
-output "site"
+#Other stuff up here (CoffeeScript, etc)
 
-input "javascripts" do
-  match "**/*.coffee" do
-    coffee_script
-  end
-
-  match "**/*.js" do
-    minispade
-    concat "application.js"
-    uglify
-  end
+match "**/*.ts" do
+  type_script
 end
 
-input "stylesheets" do
-  match "**/*.sass" do
-    sass
-  end
+#More stuff down here...
 
-  match "**/*.css" do
-    concat "application.css"
-    yui_css
-  end
-end
 ```
-
-API documentation is hosted at
-<a href="http://rubydoc.info/github/wycats/rake-pipeline-web-filters/master/file/README.yard">rubydoc.info</a>

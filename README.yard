@@ -1,25 +1,20 @@
-= Rake::Pipeline::Web::Filters
+= Rake::Pipeline::Typescript
 
-Rake::Pipeline::Web::Filters is a collection of filters for Rake::Pipeline
-for creating pipelines to generate web content.
+Rake::Pipeline::Typescript is a typescript filter to compile Tyescript
+files in the Rake Pipeline.
 
 = Usage
 
 In your +Assetfile+:
 
   !!!ruby
-  require "rake-pipeline-web-filters"
+  require "rake-pipeline-typescript"
 
   input "assets"
   output "public"
 
-  # Take all JS inputs and wrap each of them in code to
-  # register them with the Minispade module loader.
-  match "*.js" do
-    filter Rake::Pipeline::Web::Filters::MinispadeFilter
+  # Take all TS inputs and compiles them to JS
+  match "*.ts" do
+    type_script
   end
 
-  # Take all SCSS inputs and compile them with Sass
-  match "*.scss" do
-    filter Rake::Pipeline::Web::Filters::SassCompiler
-  end
