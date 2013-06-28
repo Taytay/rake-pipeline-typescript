@@ -66,7 +66,7 @@ alert(greeter(user));
     filter.file_wrapper_class = MemoryFileWrapper
     filter.manifest = MemoryManifest.new
     filter.last_manifest = MemoryManifest.new
-    filter.input_files = [input_file("input.typescript", typescript_input)]
+    filter.input_files = [input_file("input.ts", typescript_input)]
     filter.output_root = "/path/to/output"
     filter.rake_application = Rake::Application.new
     filter
@@ -81,7 +81,8 @@ alert(greeter(user));
     tasks.each(&:invoke)
 
     file = MemoryFileWrapper.files["/path/to/output/input.js"]
-    should_match file.body, expected_typescript_output
+    normalized_output = file.body.gsub(/\r\n?/, "\n")
+    should_match normalized_output, expected_typescript_output
     file.encoding.should == "UTF-8"
   end
 
@@ -99,7 +100,7 @@ alert(greeter(user));
 
   describe "invalid input" do
     let(:typescript_input) { <<-TYPESCRIPT }
-y = function(param : badtype){
+var y = function(param : badtype){
   return "This won't compile"
 }
     TYPESCRIPT
@@ -109,7 +110,7 @@ y = function(param : badtype){
       tasks = filter.generate_rake_tasks
       lambda {
         tasks.each(&:invoke)
-      }.should raise_error(ExecJS::RuntimeError, /Error compiling input.typescript.+line 1/i)
+      }.should raise_error(RuntimeError, /ts\(1,26\): error TS2095: Could not find symbol 'badtype'/i)
     end
   end
 

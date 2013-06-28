@@ -1,5 +1,5 @@
 require "rake-pipeline"
-require "rake-pipeline-web-filters"
+require "rake-pipeline-typescript"
 
 require "support/spec_helpers/file_utils"
 require "support/spec_helpers/filters"
