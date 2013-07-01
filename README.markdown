@@ -1,12 +1,12 @@
 # Rake::Pipeline::Typescript
 
 This is a typescript filter to compile Tyescript files in the Rake Pipeline.
-Not ready for production. It's crazy slow, likely due to spawning a separate
-Node process for each file that needs to be compiled. I cobbled together
-something quickly and later realized I should probably have invoked the
-Typescript compiler through a JS interpreter instead of forking to Node to do
-it. I'm publishing it anyway. Please feel free to send a pull request to make
-this usable. ;)
+Probably not ready for production. It appears to be quite slow, and my hunch is
+that it's due to spawning a separate Node process for each file that needs to be
+compiled. However, [typescript-rails](https://github.com/klaustopher/typescript-rails) is
+using the typescript-node-ruby library as well without complaint, so maybe
+the TS compiler is slow. I'm publishing it anyway. Please feel free to send pull
+requests.
 
 (I shamelessly forked [rake-pipeline-web-filters](https://github.com/wycats/rake-pipeline-web-filters)
 since this is my first Gem)
