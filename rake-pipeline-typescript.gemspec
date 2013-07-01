@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "rake-pipeline-typescript"
   gem.require_paths = ["lib"]
   gem.version       = Rake::Pipeline::Typescript::VERSION
+  gem.license       = "MIT License"
 
   gem.add_dependency "rake-pipeline", "~> 0.6"
   gem.add_dependency "rack"
