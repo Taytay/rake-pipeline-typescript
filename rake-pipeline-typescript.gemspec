@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "rake-pipeline", "~> 0.6"
   gem.add_dependency "rack"
-  gem.add_dependency "typescript-node"
+  gem.add_dependency "typescript-node", "~> 0.1"
   gem.add_dependency "typescript-src", "~> 0.9.0"
   gem.add_dependency "execjs"
 

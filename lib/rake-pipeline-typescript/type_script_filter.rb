@@ -15,7 +15,7 @@ module Rake::Pipeline::Typescript
     # @param [Hash] options options to pass to the CoffeeScript
     #   compiler.
     # @param [Proc] block the output name generator block
-    def initialize(options = {}, &block)
+    def initialize(options = [], &block)
       block ||= proc { |input| input.sub(/\.ts$/, '.js') }
       super(&block)
       @options = options
@@ -29,22 +29,21 @@ module Rake::Pipeline::Typescript
     def generate_output(inputs, output)
       inputs.each do |input|
         begin
-          if (input.respond_to?(:read))
-            script = input.read
-          else
-            script = input
-          end
-          #script = input.read if input.respond_to?(:read)
+          raise error ("I need a file to compile") if not input.respond_to?(:read)
 
-          result = TypeScript::Node::compile(script)
-          output.write(result)
-          # if result.success?
-          #     output.write(result.js)
-          # else
-          #   raise result.stderr
-          #end
+          #puts "tsc: #{input.path} " << options.join(" ")
+
+          #Using compile_file because it gives us better error messages
+          result = TypeScript::Node::compile_file(input.fullpath, options)
+          if result.success?
+              output.write(result.js)
+          else
+            raise result.stderr
+          end
         rescue ExecJS::Error => error
           raise error, "Error compiling #{input.path}. #{error.message}"
+        rescue RuntimeError => e
+          raise e, "Error compiling #{input.path}. #{e.message}"
         end
       end
     end
